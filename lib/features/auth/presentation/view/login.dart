@@ -6,7 +6,7 @@ import 'package:weather_ai/core/utils/colors.dart';
 import 'package:weather_ai/core/utils/responsive.dart';
 import 'package:weather_ai/core/widgets/custom_button.dart';
 import 'package:weather_ai/features/auth/presentation/view_model/cubit/auth_cubit.dart';
-import 'package:weather_ai/features/auth/presentation/widgets/custom_text_field.dart';
+import 'package:weather_ai/core/widgets/custom_text_field.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

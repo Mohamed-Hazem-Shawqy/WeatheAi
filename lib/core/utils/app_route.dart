@@ -47,7 +47,9 @@ class AppRoutes {
         ),
         GoRoute(
           path: home,
-          builder: (context, state) => const Home(),
+          builder: (context, state) {
+            return const Home();
+          },
         )
       ]);
 }

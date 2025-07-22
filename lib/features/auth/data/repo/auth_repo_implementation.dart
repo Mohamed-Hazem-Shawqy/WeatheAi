@@ -26,7 +26,7 @@ class AuthRepoImplementation implements AuthRepoDeclaration {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-
+      await FirebaseAuth.instance.signOut();
       // await FirebaseAuth.instance.currentUser!.sendEmailVerification();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
