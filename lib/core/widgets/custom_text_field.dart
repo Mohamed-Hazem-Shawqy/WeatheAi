@@ -3,9 +3,10 @@ import 'package:weather_ai/core/utils/colors.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField(
-      {super.key, required this.controller, required this.obscureText});
+      {super.key, required this.controller, required this.obscureText, this.prefixIcon});
   final TextEditingController? controller;
   final bool obscureText;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class CustomTextField extends StatelessWidget {
           return null;
         },
         obscureText: obscureText,
-        decoration: InputDecoration(
+        decoration: InputDecoration(prefixIcon:prefixIcon ,
           fillColor: AppColors.lightBlue,
           filled: true,
           border: OutlineInputBorder(

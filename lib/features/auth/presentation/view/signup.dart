@@ -1,12 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:weather_ai/core/cache/shared_pref.dart';
 import 'package:weather_ai/core/utils/app_route.dart';
 import 'package:weather_ai/core/utils/colors.dart';
 import 'package:weather_ai/core/utils/responsive.dart';
 import 'package:weather_ai/core/widgets/custom_button.dart';
 import 'package:weather_ai/features/auth/presentation/view_model/cubit/auth_cubit.dart';
-import 'package:weather_ai/features/auth/presentation/widgets/custom_text_field.dart';
+import 'package:weather_ai/core/widgets/custom_text_field.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -125,6 +127,15 @@ class _SignupState extends State<Signup> {
                                     );
                                 // await FirebaseAuth.instance.currentUser!
                                 //     .sendEmailVerification();
+
+                                await Pref.setData(
+                                  key: 'userName',
+                                  value: nameController.text,
+                                );
+
+                                
+
+                                
                               }
                             },
                             text: 'SignUp',
