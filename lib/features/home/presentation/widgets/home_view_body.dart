@@ -4,14 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:weather_ai/core/cache/shared_pref.dart';
 import 'package:weather_ai/core/utils/app_route.dart';
+import 'package:weather_ai/core/utils/responsive.dart';
 import 'package:weather_ai/core/widgets/custom_text_field.dart';
+import 'package:weather_ai/features/home/data/model/model.dart';
 import 'package:weather_ai/features/home/presentation/view_model/cubit/home_cubit.dart';
 import 'package:weather_ai/features/home/presentation/widgets/horizontial_calender.dart';
 import 'package:weather_ai/features/home/presentation/widgets/precent_indecator.dart';
 
 class HomeViewBody extends StatefulWidget {
-  const HomeViewBody({super.key});
-
+  const HomeViewBody({super.key, this.weatherModel});
+  final WeatherModel? weatherModel;
   @override
   State<HomeViewBody> createState() => _HomeViewBodyState();
 }
@@ -22,7 +24,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     super.initState();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().getForecast(controller.text);
     });
@@ -36,6 +38,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
+    final responsiveHeight = Responsive.height(context);
+    final responsiveWeidth = Responsive.width(context);
     String? userName = Pref.getData(key: 'userName') ?? 'Name';
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -46,12 +50,18 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               child: CircularProgressIndicator(),
             );
           } else if (state is HomeSuccess) {
+            context
+                .read<HomeCubit>()
+                .aiPredict(state.weathers, context.read<HomeCubit>().index);
             return SingleChildScrollView(
               child: Column(children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('Hello\n $userName'),
+                    Padding(
+                      padding: EdgeInsets.only(left: responsiveWeidth / 7),
+                      child: Text('Hello\n $userName'),
+                    ),
                     IconButton(
                       onPressed: () async {
                         final router = GoRouter.of(context);
@@ -84,6 +94,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     fontSize: 20,
                   ),
                 ),
+                state.predection == 1
+                    ? const Text('You can come off')
+                    : const Text("You can't come off"),
                 const SizedBox(height: 100),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -101,7 +114,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                           .weathers[context.read<HomeCubit>().index].avgTemp,
                     ),
                   ],
-                )
+                ),
               ]),
             );
           } else if (state is HomeFailuer) {

@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => HomeCubit(),
+          
         ),
       ],
       child: MaterialApp.router(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:weather_ai/core/Api/api_error_handeler.dart';
 import 'package:weather_ai/features/home/data/data_source/data_source.dart';
 import 'package:weather_ai/features/home/data/model/model.dart';
-import 'package:weather_ai/features/home/data/repo/repo_decl.dart';
+import 'package:weather_ai/features/home/domian/repo/repo_decl.dart';
 
 class RepoImpl implements RepoDecl {
   final Datasource datasource;
@@ -28,6 +28,7 @@ class RepoImpl implements RepoDecl {
         ServerFailure.fromdioException(e),
       );
     } catch (e) {
+      print(e);
       return left(
         ServerFailure(
           errIcon: Icons.error,
