@@ -5,8 +5,10 @@ class WeatherModel {
   final String text;
   final String icon;
   final String date;
+
   final int humidity;
   final int chanceOfRain;
+
 
   WeatherModel({
     required this.maxTemp,
@@ -15,8 +17,10 @@ class WeatherModel {
     required this.text,
     required this.icon,
     required this.date,
+
     required this.humidity,
     required this.chanceOfRain,
+
   });
   factory WeatherModel.fromjson(Map<String, dynamic> json, int index) {
     return WeatherModel(
@@ -33,8 +37,10 @@ class WeatherModel {
               ['icon'] ??
           '',
       date: json["forecast"]['forecastday'][index]['date'],
+
       humidity: json['current']['humidity'],
       chanceOfRain: json["forecast"]['forecastday'][index]['day']['daily_chance_of_rain']
+
     );
   }
 }

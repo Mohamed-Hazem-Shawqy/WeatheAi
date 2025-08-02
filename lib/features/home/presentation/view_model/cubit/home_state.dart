@@ -12,6 +12,8 @@ final class HomeSuccess extends HomeState {
   final int? predection;
 
   HomeSuccess({this.predection, this.index, required this.weathers});
+
+  HomeSuccess({this.index, required this.weathers});
 }
 
 final class HomeFailuer extends HomeState {
