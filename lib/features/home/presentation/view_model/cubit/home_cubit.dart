@@ -7,6 +7,9 @@ import 'package:weather_ai/features/home/data/model/model.dart';
 import 'package:weather_ai/features/home/data/repo/repo_impl.dart';
 import 'package:weather_ai/features/home/data/data_source/data_source.dart';
 
+import 'package:weather_ai/features/home/domian/entity/ai_logic.dart';
+
+
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
@@ -15,11 +18,17 @@ class HomeCubit extends Cubit<HomeState> {
   final RepoImpl repoImpl = RepoImpl(
     datasource: Datasource(dio: Dio()),
   );
+
+  late AiLogic aiLogic;
+
+
   DateTime now = DateTime.now();
   DateTime nowPlus1 = DateTime.now().add(const Duration(days: 1));
   DateTime nowPlus2 = DateTime.now().add(const Duration(days: 2));
   int index = 0;
   DateTime selectedDate = DateTime.now();
+
+
 
   void changeSelectedDate() {
     final formatter = DateFormat('yyyy-MM-dd');
@@ -44,6 +53,15 @@ class HomeCubit extends Cubit<HomeState> {
         index: index,
       ));
     }
+  }
+  //
+
+  Future<void> aiPredict(List<WeatherModel> weather, int index) async {
+    aiLogic = AiLogic(dio: Dio(), weatherModel: weather);
+    final prediction = await aiLogic.predict(index);
+    print("predict=$prediction");
+
+    emit(HomeSuccess(predection: prediction, weathers: weather));
   }
 
   Future<void> getForecast(String country) async {

@@ -4,14 +4,14 @@ import 'package:weather_ai/core/utils/colors.dart';
 
 class PrecentIndecator extends StatelessWidget {
   const PrecentIndecator({super.key, required this.temp});
- final double temp;
+  final double temp;
   @override
   Widget build(BuildContext context) {
     return CircularPercentIndicator(
       radius: 60.0,
       lineWidth: 10.0,
-      percent: 1.0,
-      center:  Text('$temp'),
+      percent: (100 - temp) / 100,
+      center: Text('$temp'),
       progressColor: AppColors.blue,
     );
   }
